@@ -5,6 +5,7 @@ from chat.models import Message,Room
 from users.models import User
 from datetime import datetime, timezone
 from django.core.serializers import serialize
+import pytz
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
@@ -38,6 +39,9 @@ class ChatConsumer(WebsocketConsumer):
         msg_date = msg.timestamp.strftime("%b. %d, %Y")
         msg_time = msg.timestamp.strftime("%I:%M ")
         message_p = msg.timestamp.strftime("%p")
+        timezone = pytz.timezone("UTC")
+        with_timezone = timezone.localize(msg.timestamp)
+        msg.timestamp = with_timezone
         msg_time_millis=msg.convert
 
         message_period = '.'.join([x.lower() for x in message_p if x=='A' or x=='M' or x=='P'])
