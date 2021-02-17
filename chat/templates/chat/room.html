@@ -50,7 +50,7 @@
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
         document.getElementById("chat-log").scrollTop = document.getElementById("chat-log").scrollHeight
         const chatSocket = new WebSocket(
-            'ws://'
+            'wss://'
             + window.location.host
             + '/ws/chat/'
             + roomName
